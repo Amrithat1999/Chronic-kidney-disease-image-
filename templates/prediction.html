@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <style>
+        .center-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            max-width: 400px;
+            height: 50vh;
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .return-home {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .return-home .btn {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Added shadow */
+        }
+       
+        body {
+            background-image: url("static/kidney disease bg2.png");
+            
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand" href="{{ url_for('home') }}" style="color:white">Kidney Disease Classifier</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('overview') }}" style="color:white">Overview</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('kidney_disease') }}" style="color:white">What is Kidney Disease</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container center-content">
+        <h1 style="text-align: center;">Kidney Disease Prediction</h1>
+        <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center;">
+            <input type="file" name="image" accept="image/*">
+            <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Predict</button>
+        </form>
+        {% if prediction %}
+            <div class="alert alert-info" role="alert" style="margin-top: 10px;text-align: center;"></div>
+                Prediction:{{ prediction }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="return-home">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Return Home</a>
+    </div>
+</body>
+</html>
